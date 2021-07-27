@@ -1484,6 +1484,7 @@ class BlogService {
     }
     getBlogs() {
         const url = `${this.baseUrl}/blogs`;
+        console.log('BlogService > getBlogs() > url', url);
         return this.http.get(url);
     }
     getBlogsForUserId(userId) {

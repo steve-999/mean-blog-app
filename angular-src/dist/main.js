@@ -350,7 +350,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: false,
-    API_BASE_URL: 'http://localhost:5000',
+    //API_BASE_URL: 'http://localhost:5000',
+    API_BASE_URL: 'https://mean-blog-app-896df.ondigitalocean.app',
     PORT: 5000,
     MIN_PASSWORD_LENGTH: 1,
     ADMIN_USER_EMAIL: 'admin@gmail.com',

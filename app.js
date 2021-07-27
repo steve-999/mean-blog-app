@@ -66,8 +66,9 @@ app.post('/api/signup', async (req, res) => {
         }
         else {
             try {
-                const newUser = await User.create(req.body);
-
+                const userData = req.body;
+                userData.username = userData.email.split('@')[0];
+                const newUser = await User.create(userData);
                 const payload = { subject: newUser._id}
                 const token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
                 res.cookie('token', 'Bearer ' + token, {httpOnly: true});
@@ -212,7 +213,7 @@ app.delete('/api/users', verifyToken, (req, res) => {
         .catch(err => res.json(err));    
 });
 
-app.get('/api/usernames', verifyToken, (req, res) => {
+app.get('/api/usernames', (req, res) => {
     User.find().sort()
         .then(result => {
             const arr = result.map(user => ({_id: user._id, username: user.username}));
@@ -221,7 +222,7 @@ app.get('/api/usernames', verifyToken, (req, res) => {
         .catch(err => res.json(err));
 });
 
-app.get('/api/usernames/:id', verifyToken, (req, res) => {
+app.get('/api/usernames/:id', (req, res) => {
     User.findById(req.params.id).sort()
         .then(resp => res.json({_id: resp._id, username: resp.username}))
         .catch(err => res.json(err));

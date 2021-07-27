@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   //API_BASE_URL: 'http://localhost:5000',
   API_BASE_URL: 'https://mean-blog-app-896df.ondigitalocean.app',
   PORT: 5000,

@@ -16,7 +16,7 @@ const blogSchema = new Schema({
     },
     username: {
         type: String,
-        required: false
+        required: true
     }
 }, { timestamps: true });
 

@@ -3,8 +3,8 @@ export class Blog {
     userId: string;
     title: string;
     body: string;
+    username: string;
     body_paragraphs?: string[];
-    username?: string;
     createdAt?: string;
     updatedAt?: string;
 };

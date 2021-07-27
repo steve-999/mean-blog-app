@@ -19,31 +19,18 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     document.title = 'MEAN Blog App | Home';
-    this.showLoader = true;
-    this.fetchUsersAndBlogs();
+    this.fetchBlogs()
   }
 
-  fetchUsersAndBlogs() {
-    this.userService.getUsernames()
-    .subscribe(
-      resp => {
-        this.users = resp;
-        const userIdMap = new Map();
-        this.users.forEach(user => userIdMap.set(user._id, user.username));
-        this.blogService.getBlogs()
-          .subscribe(
-            resp => {
-              this.showLoader = false;
-              resp.forEach(blog => {
-                const username = userIdMap.get(blog.userId);
-                const obj = {...blog, username};
-                this.blogs.push(obj);
-              })
-            },
-            err => console.log('HomeComponent > ngOnInit > getBlogs > err', err)
-          );
-      },
-      err => console.log('HomeComponent > ngOnInit > getUsernames > err', err)
-    );
+  fetchBlogs() {
+    this.showLoader = true;
+    this.blogService.getBlogs()
+      .subscribe(
+        resp => {
+          this.showLoader = false;
+          this.blogs = resp;
+        },
+        err => console.log('HomeComponent > fetchBlogs > err', err)
+      );
   }
 }

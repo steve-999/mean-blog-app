@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 import { User } from '../models/user';
@@ -15,11 +15,6 @@ export class UserService {
   users: User[] = [];
 
   constructor(private http: HttpClient) { }
-
-  getUsers(): Observable<User[]> {
-    const url = `${this.baseUrl}/usernames`;
-    return this.http.get<User[]>(url);
-  }
 
   getUser(id): Observable<User> {
     const url = `${this.baseUrl}/users/${id}`;

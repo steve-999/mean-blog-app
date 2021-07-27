@@ -77,7 +77,6 @@ export class SignupLoginFormComponent implements OnInit {
   handleResponse(resp) {
     this.authService.saveUserData(resp);
     this.router.navigate(['/dashboard']);
-    this.messageService.sendMessage('message: user successfully logged in or signed up');
   }
 
   handleErrors(err) {

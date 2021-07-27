@@ -1,23 +1,25 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BlogService } from '../../services/blog.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Blog } from '../../models/blog';
 import { reverseHtmlChars, escapeHtmlChars } from '../../shared/shared_functions';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-edit-blog-form',
   templateUrl: './edit-blog-form.component.html',
   styleUrls: ['./edit-blog-form.component.css']
 })
-export class EditBlogFormComponent implements OnInit {
+export class EditBlogFormComponent implements OnInit, OnChanges {
   pageType: string;
   pageHeading: string;
   submitButtonText: string;
   blog_id: string;
   userId: string;
-  blog: Blog = {title: '', body: '', userId: ''};
+  username: string;
+  blog: Blog = {title: '', body: '', userId: '', username: ''};
   errorMessage = '';
   showLoader = false;
 
@@ -25,45 +27,49 @@ export class EditBlogFormComponent implements OnInit {
     private blogService: BlogService,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private router: Router) {
-
-      if (this.router.url.startsWith('/edit')) {
-        this.pageType = 'edit';
-        this.pageHeading = 'Edit Your Blog';
-        this.submitButtonText = 'Update';
-        this.blog_id = this.activatedRoute.snapshot.params._id;
-  
-        this.showLoader = true;
-        this.blogService.getBlog(this.blog_id)
-          .subscribe(
-            resp => {
-              this.showLoader = false;
-              if (resp.userId === this.userId) {
-                this.blog = resp;
-                this.blog.title = reverseHtmlChars(this.blog.title);
-                this.blog.body = reverseHtmlChars(this.blog.body);
-              }
-              else {
-                this.router.navigate(['/login'], {state: {message: 'You are not authorized to perform that operation'}});
-              }
-  
-            },
-            err => {
-              this.showLoader = false;
-              console.log('EditBlogFormComponent > ngOnInit > getBlog > err', err);
-            }
-          );  
-      }
+    private router: Router,
+    private userService: UserService) {
   }
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
+    this.getUsername();
     if (this.router.url === '/add') {
       this.pageType = 'add';
       this.pageHeading = 'New Blog';
       this.submitButtonText = 'Create';
       this.blog_id = undefined;
     } 
+    else if (this.router.url.startsWith('/edit')) {
+      this.pageType = 'edit';
+      this.pageHeading = 'Edit Your Blog';
+      this.submitButtonText = 'Update';
+      this.blog_id = this.activatedRoute.snapshot.params._id;
+      if (history.state.data) {
+        this.blog = history.state.data;
+        this.blog.title = reverseHtmlChars(this.blog.title);
+        this.blog.body = reverseHtmlChars(this.blog.body);
+      }
+    }
+  }
+
+  ngOnChanges(): void {
+    if (history.state.data) {
+      this.blog = history.state.data;
+      this.blog.title = reverseHtmlChars(this.blog.title);
+      this.blog.body = reverseHtmlChars(this.blog.body);
+    }
+  }
+
+  getUsername() {
+    this.userService.getUsername(this.userId)
+      .subscribe(
+        resp => {
+          this.showLoader = false;
+          this.username = resp.username;
+        },
+        err => console.log(err)
+      )
   }
 
   onSubmit() {
@@ -83,7 +89,7 @@ export class EditBlogFormComponent implements OnInit {
   }
 
   onSubmitAddBlog(blog: Blog) {
-    blog = {...blog, userId: this.userId};
+    blog = {...blog, userId: this.userId, username: this.username};
     this.showLoader = true;
     this.blogService.addBlog(blog)
       .subscribe(

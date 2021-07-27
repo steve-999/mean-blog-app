@@ -6,6 +6,7 @@ import { User } from '../models/user';
 import { UserService } from './user.service';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { MessageService } from './message.service';
 
 
 const httpOptions = {
@@ -21,7 +22,8 @@ export class AuthService {
 
   constructor(private http: HttpClient,
               private router: Router,
-              private userService: UserService) { }
+              private userService: UserService,
+              private messageService: MessageService) { }
 
   signupUser(userData) {
     const user: User = userData;
@@ -37,10 +39,12 @@ export class AuthService {
 
   saveUserData(data) {
     localStorage.setItem('userId', data.userId);
+    this.messageService.sendMessage('user has logged in');
   }
 
   logoutUser() {
     localStorage.removeItem('userId');
+    this.messageService.sendMessage('user has logged out');
     this.router.navigate(['/login']);
   }
 

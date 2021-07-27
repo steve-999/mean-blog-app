@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { Blog } from '../models/blog';
 import { User } from '../models/user';
 import { UserService } from './user.service';
+import { AuthService } from './auth.service';
 
 const blogUsingMarkdown = `
 # Heading text 
@@ -74,6 +75,7 @@ const blogUsingHTML = `
   providedIn: 'root'
 })
 export class FakeDataService {
+
   baseUrl = `${environment.API_BASE_URL}/api`; 
   Nposts_per_user = 5;
 
@@ -117,7 +119,8 @@ export class FakeDataService {
   createdUsers: any[] = [];
 
   constructor(private http: HttpClient,
-              private userService: UserService) {}
+              private userService: UserService,
+              private authService: AuthService) {}
 
   createFakeUsers() {
     const url = `${this.baseUrl}/users`
@@ -135,7 +138,7 @@ export class FakeDataService {
 
   createFakeBlogs() {
     let url = `${this.baseUrl}/createFakeBlogsForUser`;
-    this.userService.getUsers()
+    this.userService.getUsernames()
       .subscribe(
         users => {
           users.forEach(user => {
@@ -149,6 +152,10 @@ export class FakeDataService {
             const user = users.find(x => x.username === 'Guest');
             this.createBlogWithMarkdownHTML(user, blogUsingHTML, 'Blog using HTML');
             this.createBlogWithMarkdownHTML(user, blogUsingMarkdown, 'Blog using Markdown');
+            setTimeout(() => {
+                console.log('logging user out after fake data creation');
+                this.authService.logoutUser();
+            }, 2000);
           }, 2000);
         },
         err => console.log(err)

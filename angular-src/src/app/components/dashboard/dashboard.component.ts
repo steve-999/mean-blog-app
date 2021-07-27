@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
 
   validateUsername(username) {
     if (username.length === 0) {
-      this.displayMessage('Username is required', true);
+      this.displayMessage('Username is required', false);
       return false;
     }
     else if (username.length > 50) {

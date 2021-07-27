@@ -1,0 +1,22 @@
+
+.blog-list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.blog-container {
+    margin: 0 auto;
+    max-width: 900px;
+    width: 80%;
+}
+
+@media screen and (max-width: 800px) {
+    .blog-container { width: 85%; }
+}
+
+@media screen and (max-width: 650px) {
+    .blog-container { width: 90%; }
+}

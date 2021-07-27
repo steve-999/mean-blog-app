@@ -1,0 +1,8 @@
+<div class="blog-card fadeInAnimation">
+    <h3 class="blog-title"><a [ngClass]="linkClass" [routerLink]="'/blogs/' + blog?._id">{{ blog?.title }}</a></h3>
+    <div class="blog-body" [innerHTML]="blog?.bodyHTML"></div>
+    <div class="author-date">
+        <span class="user-id-text">{{ blog?.username ? blog?.username : blog?.userId }}</span>
+        <span class="user-id-text">{{ blog?.createdAt | date : 'h:mm a, MMM d y' }}</span>
+    </div>
+</div>    

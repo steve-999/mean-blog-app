@@ -1,0 +1,15 @@
+<header>
+    <h1 class="logo"><a routerLink="/">MEAN Blog App</a></h1>
+    <div class="links-ul-container">
+        <ul>
+            <li><a routerLink="/">Home</a></li>
+            <li *ngIf="userIsLoggedIn" (click)="onClickLink('/add')"><a class="router-link" routerLink="/add">Create</a></li>
+            <li *ngIf="userIsAdmin" (click)="onClickLink('/admin')"><a class="router-link" routerLink="/admin">Admin</a></li>
+            <li *ngIf="!userIsLoggedIn"><a routerLink="/signup">Signup</a></li>
+            <li *ngIf="!userIsLoggedIn"><a routerLink="/login">Login</a></li>
+            <li *ngIf="userIsLoggedIn"><a routerLink="/dashboard">Dashboard</a></li>
+            <li *ngIf="userIsLoggedIn" (click)="logoutUser()"><a routerLink="/logout">Logout</a></li>
+        </ul> 
+    </div>
+    <div class="username"><a href="/dashboard">{{ username }}</a></div>
+</header>

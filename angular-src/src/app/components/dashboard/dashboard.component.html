@@ -1,0 +1,24 @@
+<app-loader [showLoader]="showLoader"></app-loader>
+<div class="dashboard-container fadeInAnimation">
+    <div class="form-container">
+        <form>
+            <h3>Username</h3>
+            <input type="text" 
+                    name="username" 
+                    [ngModel]="username" 
+                    (ngModelChange)="handleInputChange($event)" 
+                    placeholder="Please enter a username">
+            <div class="message" [ngStyle]="{'color': messageColor}">{{ message }}</div>
+            <button type="submit" (click)="onUpdateUsername()">Update</button>
+        </form>
+    </div>
+
+    <div class="dashboard-blogs-list-container">
+        <h3>Your Blogs</h3>
+        <ul class="dashboard-blogs-list fadeInAnimation">
+            <li *ngFor="let blog of blogs"class="dashboard-blog-item">
+                <a [routerLink]="'/blogs/' + blog?._id">{{ blog?.title }}</a>    
+            </li>
+        </ul>
+    </div>
+</div>

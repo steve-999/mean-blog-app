@@ -1,0 +1,72 @@
+
+.component-container {
+    margin: 40px auto;
+}
+
+.buttons-container {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.edit-button, .delete-button {
+    color: white;
+    width: 100px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    margin: 0 10px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.edit-button {
+    background-color: SeaGreen;
+}
+
+.edit-button:hover {
+    background-color: rgb(63, 194, 120);
+}
+
+.delete-button {
+    background-color: indianred;  
+}
+
+.delete-button:hover {
+    background-color: rgb(241, 111, 111);  
+}
+
+a {
+    color: darkslateblue;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+a:hover {
+    color: crimson;
+    text-decoration: underline;
+}
+
+.styling-comment {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.blog-container {
+    margin: 0 auto 50px auto;
+    max-width: 900px;
+    width: 80%;
+}
+
+@media screen and (max-width: 800px) {
+    .blog-container { width: 85%; }
+}
+
+@media screen and (max-width: 650px) {
+    .blog-container { width: 90%; }
+}

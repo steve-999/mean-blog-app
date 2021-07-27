@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\angular-src",
+    "\\angular-src\\src",
+    "\\angular-src\\src\\app",
+    "\\angular-src\\src\\app\\components",
+    "\\angular-src\\src\\app\\components\\add-blog",
+    "\\angular-src\\src\\app\\models",
+    "\\angular-src\\src\\app\\services",
+    "\\angular-src\\src\\environments",
+    "\\models"
+  ],
+  "SelectedNode": "\\app.js",
+  "PreviewInSolutionExplorer": false
+}

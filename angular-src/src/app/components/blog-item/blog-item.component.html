@@ -1,0 +1,11 @@
+<app-loader [showLoader]="showLoader"></app-loader>
+<div class="blog-container">
+    <div class="buttons-container">
+        <button *ngIf="userIsOwner" class="edit-button" (click)="onEditClick()">Edit</button>
+        <button *ngIf="userIsOwner" class="delete-button" (click)="onDeleteClick()">Delete</button>
+    </div>
+    <app-display-blog [blog]="blog" parent="blog-item-component"></app-display-blog>
+    <div class="styling-comment" *ngIf="userIsOwner">
+        <p>Add styling with <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank">Markdown</a> and/or HTML.</p>
+    </div>
+</div>

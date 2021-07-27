@@ -1,0 +1,31 @@
+<app-loader [showLoader]="showLoader"></app-loader>
+<div class="signup-login-form-container fadeInAnimation">
+    <div class="message">{{ message }}</div>
+    <form>
+        <h2>{{ signup_login_type }}</h2>
+        <label for="email">Email</label>
+        <input 
+            type="text" 
+            name="email" 
+            class="input-email" 
+            [ngModel]="email" 
+            (ngModelChange)="validateUserData('Email', $event)" 
+            (blur)="handleBlur('Email', $event)" 
+            placeholder="Please enter your email address"          
+        />
+        <div class="error">{{ emailError }}</div>
+        <label for="password">Password</label>
+        <input 
+            type="password" 
+            name="password" 
+            class="input-password"
+            [ngModel]="password"  
+            (ngModelChange)="validateUserData('Password', $event)" 
+            (blur)="handleBlur('Password', $event)" 
+            placeholder="Please enter a password"           
+        />
+        <div class="error">{{ passwordError }}</div>
+        <button (click)="onSubmit()">{{ signup_login_type }}</button>
+    </form>
+</div>
+

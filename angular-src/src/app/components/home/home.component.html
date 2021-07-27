@@ -1,0 +1,7 @@
+<app-loader [showLoader]="showLoader"></app-loader>
+<div class="blog-list-container">
+    <div class="blog-container" *ngFor="let blog of blogs">
+        <app-display-blog [blog]="blog" parent="home-component"></app-display-blog>
+    </div>
+</div>
+

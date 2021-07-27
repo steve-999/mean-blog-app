@@ -33,21 +33,16 @@ app.use(cors(corsOptions));
 
 
 const verifyToken = (req, res, next) => {
-    console.log('req.cookies', req.cookies);
     if (!req.cookies.token) {
-        console.log('!req.cookies.token');
         return res.status(401).send('Unauthorized request');
     }
     const token = req.cookies.token.split(' ')[1];
     console.log('token', token);
     if (token === 'null') {
-        console.log("token === 'null'");
         return res.status(401).send('Unauthorized request');
     }
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log('payload', payload);
     if (!payload) {
-        console.log('!payload')
         return res.status(401).send('Unauthorized request');
     }
     req.userId = payload.subject;

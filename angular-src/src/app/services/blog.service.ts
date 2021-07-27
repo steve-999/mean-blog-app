@@ -23,7 +23,6 @@ export class BlogService {
 
   getBlogs(): Observable<Blog[]> {
     const url = `${this.baseUrl}/blogs`;
-    console.log('BlogService > getBlogs() > url', url);
     return this.http.get<Blog[]>(url);
   }
 

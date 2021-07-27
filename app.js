@@ -37,7 +37,6 @@ const verifyToken = (req, res, next) => {
         return res.status(401).send('Unauthorized request');
     }
     const token = req.cookies.token.split(' ')[1];
-    console.log('token', token);
     if (token === 'null') {
         return res.status(401).send('Unauthorized request');
     }

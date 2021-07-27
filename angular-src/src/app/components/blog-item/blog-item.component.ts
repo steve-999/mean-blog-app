@@ -37,7 +37,7 @@ export class BlogItemComponent implements OnInit {
           const userId = this.authService.getLoggedInUserId();
           this.userIsOwner = this.blog.userId === userId;
           document.title = `MEAN Blog App | ${this.blog.title}`;
-          this.userService.getUser(this.blog.userId)
+          this.userService.getUsername(this.blog.userId)
             .subscribe(
               resp => this.blog.username = resp.username,
               err => console.log(err)

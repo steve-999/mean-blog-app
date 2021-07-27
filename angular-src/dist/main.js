@@ -74,7 +74,7 @@ class BlogItemComponent {
             const userId = this.authService.getLoggedInUserId();
             this.userIsOwner = this.blog.userId === userId;
             document.title = `MEAN Blog App | ${this.blog.title}`;
-            this.userService.getUser(this.blog.userId)
+            this.userService.getUsername(this.blog.userId)
                 .subscribe(resp => this.blog.username = resp.username, err => console.log(err));
         }, err => {
             this.showLoader = false;
@@ -350,8 +350,8 @@ __webpack_require__.r(__webpack_exports__);
 // The list of file replacements can be found in `angular.json`.
 const environment = {
     production: true,
-    //API_BASE_URL: 'http://localhost:5000',
-    API_BASE_URL: 'https://mean-blog-app-896df.ondigitalocean.app',
+    API_BASE_URL: 'http://localhost:5000',
+    //API_BASE_URL: 'https://mean-blog-app-896df.ondigitalocean.app',
     PORT: 5000,
     MIN_PASSWORD_LENGTH: 1,
     ADMIN_USER_EMAIL: 'admin@gmail.com',

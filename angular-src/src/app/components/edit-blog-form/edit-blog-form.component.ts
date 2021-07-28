@@ -5,7 +5,6 @@ import { BlogService } from '../../services/blog.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Blog } from '../../models/blog';
 import { reverseHtmlChars, escapeHtmlChars } from '../../shared/shared_functions';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-edit-blog-form',
@@ -27,13 +26,12 @@ export class EditBlogFormComponent implements OnInit, OnChanges {
     private blogService: BlogService,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private userService: UserService) {
+    private router: Router) {
   }
 
   ngOnInit(): void {
     this.userId = this.authService.getLoggedInUserId();
-    this.getUsername();
+    this.username = this.authService.getLoggedInUsername();
     if (this.router.url === '/add') {
       this.pageType = 'add';
       this.pageHeading = 'New Blog';
@@ -59,17 +57,6 @@ export class EditBlogFormComponent implements OnInit, OnChanges {
       this.blog.title = reverseHtmlChars(this.blog.title);
       this.blog.body = reverseHtmlChars(this.blog.body);
     }
-  }
-
-  getUsername() {
-    this.userService.getUsername(this.userId)
-      .subscribe(
-        resp => {
-          this.showLoader = false;
-          this.username = resp.username;
-        },
-        err => console.log(err)
-      )
   }
 
   onSubmit() {
@@ -143,6 +130,5 @@ export class EditBlogFormComponent implements OnInit, OnChanges {
       this.errorMessage = '';
       return true;
     }
-
   }
 }

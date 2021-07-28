@@ -20,6 +20,7 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AdminGuard } from './guards/admin.guard';
 import { LoaderComponent } from './components/loader/loader.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     FormsModule,
     StoreModule.forRoot({})
   ],
-  providers: [AuthService, AuthGuard, AdminGuard, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
+  providers: [CookieService, AuthService, AuthGuard, AdminGuard, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

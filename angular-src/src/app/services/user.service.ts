@@ -32,7 +32,7 @@ export class UserService {
   }
 
   updateUsername(userId, username): Observable<User> {
-    const url = `${this.baseUrl}/users/${userId}`;
+    const url = `${this.baseUrl}/usernames/${userId}`;
     return this.http.patch<User>(url, {username});
   }
 

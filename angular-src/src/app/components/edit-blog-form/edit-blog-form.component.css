@@ -61,8 +61,10 @@ label {
 }
 
 .error-message {
+    background-color: #eee;
+    height: 16px;
     color: crimson;
-    font-size: 18px;
+    font-size: 16px;
     margin: 0 auto;
     text-align: center;
 }

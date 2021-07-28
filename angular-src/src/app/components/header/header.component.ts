@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   updateNavLinks(message) {
     this.message = {text: 'abcdefg'};
-    this.userIsLoggedIn = this.authService.loggedIn();
+    this.userIsLoggedIn = this.authService.isloggedIn();
     this.userId = this.authService.getLoggedInUserId();
     if (this.userId) {
       this.userService.getUsername(this.userId)

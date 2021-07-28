@@ -44,6 +44,9 @@ const verifyToken = (req, res, next) => {
     if (!payload) {
         return res.status(401).send('Unauthorized request');
     }
+    else if (payload.subject !== req.cookies.userId) {
+        return res.status(401).send('Unauthorized request');
+    }
     req.userId = payload.subject;
     next();
 }
@@ -72,7 +75,8 @@ app.post('/api/signup', async (req, res) => {
                 const payload = { subject: newUser._id}
                 const token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
                 res.cookie('token', 'Bearer ' + token, {httpOnly: true});
-                res.status(201).json({userId: newUser._id.toString()}); 
+                res.cookie('username', userData.username);
+                res.status(201).json({userId: newUser._id.toString(), username: newUser.username}); 
             } 
             catch(err) {
                 res.status(400).json(err); 
@@ -98,7 +102,9 @@ app.post('/api/login', async (req, res) => {
                         const payload = { subject: user._id};
                         const token = jwt.sign(payload, process.env.JWT_SECRET_KEY);
                         res.cookie('token', 'Bearer ' + token, {httpOnly: true});
-                        res.status(200).send({userId: user._id});
+                        res.cookie('userId', user._id.toString());
+                        res.cookie('username', user.username);
+                        res.status(200).send({userId: user._id, username: user.username});
                     }
                     else {
                         res.status(401).send('Incorrect password');
@@ -174,22 +180,19 @@ app.get('/api/useridForBlog/:_id', (req, res) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-app.patch('/api/users/:userId', verifyToken, (req, res) => {
-    const userId = req.params.userId;
-    User.findByIdAndUpdate(userId, {$set: {username: req.body.username}}, {new:true})
-        .then(result => res.json(result.username))
-        .catch(err => res.json(err));
-});
-
-app.get('/api/users', verifyToken, (req, res) => {
-    User.find().sort({username: 'ascending'})
-        .then(result => res.json(result))
-        .catch(err => res.json(err));
-});
+// app.get('/api/users', verifyToken, (req, res) => {
+//     User.find().sort({username: 'ascending'})
+//         .then(result => res.json(result))
+//         .catch(err => res.json(err));
+// });
 
 app.get('/api/users/:id', verifyToken, (req, res) => {
     User.findById(req.params.id)
-        .then(result => res.json(result))
+        .then(result => {
+            const d = {...result.toObject()};
+            delete d.password;
+            res.json(d);
+        })
         .catch(err => res.json(err));
 });
 
@@ -225,6 +228,16 @@ app.get('/api/usernames', (req, res) => {
 app.get('/api/usernames/:id', (req, res) => {
     User.findById(req.params.id).sort()
         .then(resp => res.json({_id: resp._id, username: resp.username}))
+        .catch(err => res.json(err));
+});
+
+app.patch('/api/usernames/:userId', verifyToken, (req, res) => {
+    const userId = req.params.userId;
+    User.findByIdAndUpdate(userId, {$set: {username: req.body.username}}, {new:true})
+        .then(result => {
+            res.cookie('username', result.username);
+            res.json(result.username);   
+        })
         .catch(err => res.json(err));
 });
 

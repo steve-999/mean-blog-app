@@ -5,7 +5,6 @@ import { Blog } from '../../models/blog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-blog-item',
@@ -22,7 +21,6 @@ export class BlogItemComponent implements OnInit {
       private blogService: BlogService, 
       private activatedRoute: ActivatedRoute,
       private authService: AuthService,
-      private userService: UserService,
       private router: Router) { 
     this._id = this.activatedRoute.snapshot.params._id;
   }
@@ -37,11 +35,6 @@ export class BlogItemComponent implements OnInit {
           const userId = this.authService.getLoggedInUserId();
           this.userIsOwner = this.blog.userId === userId;
           document.title = `MEAN Blog App | ${this.blog.title}`;
-          this.userService.getUsername(this.blog.userId)
-            .subscribe(
-              resp => this.blog.username = resp.username,
-              err => console.log(err)
-            )
         },
         err => {
           this.showLoader = false;

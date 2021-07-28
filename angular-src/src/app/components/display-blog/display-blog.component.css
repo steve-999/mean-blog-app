@@ -40,12 +40,36 @@
     text-decoration: underline;
 }
 
+.blog-card .blog-body h1,
+.blog-card .blog-body h2,
+.blog-card .blog-body h3,
+.blog-card .blog-body h4,
+.blog-card .blog-body h5 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.blog-card .blog-body h1 { font-size: 24px; }
+.blog-card .blog-body h2 { font-size: 20px; }
+.blog-card .blog-body h3 { font-size: 16px; }
+.blog-card .blog-body h4 { font-size: 14px; }
+.blog-card .blog-body h5 { font-size: 12px }
+
 .blog-card .blog-body p {
     background-color: #f4f4f4;
     font-size: 15px;
     font-weight: 500;
     line-height: 1.6;
     padding: 8px 0;
+}
+
+.blog-card .blog-body ul,
+.blog-card .blog-body ol {
+    margin: 20px;
+}
+
+.blog-card .blog-body code {
+    font-family: Consolas, sans-serif;
 }
 
 .blog-card .user-id-text {

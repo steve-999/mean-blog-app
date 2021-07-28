@@ -3,7 +3,6 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
-import { User } from '../models/user';
 import { map } from 'rxjs/operators';
 
 
@@ -11,7 +10,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
-  loggedInUser: User;
 
   constructor(private authService: AuthService,
               private userService: UserService,

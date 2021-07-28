@@ -7,6 +7,7 @@ import { UserService } from './user.service';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 const httpOptions = {
@@ -23,7 +24,8 @@ export class AuthService {
   constructor(private http: HttpClient,
               private router: Router,
               private userService: UserService,
-              private messageService: MessageService) { }
+              private messageService: MessageService,
+              private cookieService: CookieService) { }
 
   signupUser(userData) {
     const user: User = userData;
@@ -37,23 +39,24 @@ export class AuthService {
     return this.http.post<any>(url, user, httpOptions);
   }
 
-  saveUserData(data) {
-    localStorage.setItem('userId', data.userId);
-    this.messageService.sendMessage('user has logged in');
-  }
-
   logoutUser() {
-    localStorage.removeItem('userId');
+    this.cookieService.delete('username');
+    this.cookieService.delete('userId');
+    this.cookieService.delete('token');
     this.messageService.sendMessage('user has logged out');
     this.router.navigate(['/login']);
   }
 
-  loggedIn() {
-    return localStorage.getItem('userId') ? true : false;  
+  isloggedIn() {
+    return this.cookieService.check('userId');  
   }
 
   getLoggedInUserId() {
-    return localStorage.getItem('userId');
+    return this.cookieService.get('userId');
+  }
+
+  getLoggedInUsername() {
+    return this.cookieService.get('username');
   }
 
   loggedInUserIsAdmin(): Observable<any> {

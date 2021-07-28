@@ -37,8 +37,6 @@ export class SignupLoginFormComponent implements OnInit {
     }
   }
 
-  ///////////////////////////////////////////////////////////////////////////
-
   onSubmit() {
     if (!this.preSubmitValidation()) {
       return;
@@ -75,7 +73,7 @@ export class SignupLoginFormComponent implements OnInit {
   }
 
   handleResponse(resp) {
-    this.authService.saveUserData(resp);
+    this.messageService.sendMessage('user has logged in');
     this.router.navigate(['/dashboard']);
   }
 
@@ -92,8 +90,6 @@ export class SignupLoginFormComponent implements OnInit {
     } 
     this.messageService.sendMessage('message: errors occurred after trying to log in or sign up');
   }
-
-  //////////////////////////////////////////////////////////////////////////////
 
   handleBlur(type, event) {
     const val = event.target.value;

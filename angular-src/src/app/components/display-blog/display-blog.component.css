@@ -58,14 +58,16 @@
 .blog-card .blog-body p {
     background-color: #f4f4f4;
     color: black;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
-    line-height: 1.6;
+    line-height: 1.7;
     padding: 10px 0;
 }
 
 .blog-card .blog-body ul,
 .blog-card .blog-body ol {
+    color: black;
+    font-size: 14px;
     margin: 20px;
 }
 
